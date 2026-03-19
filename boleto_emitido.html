@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boleto Emitido — Desafio 21 Dias</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--laranja:#FF4500;--amarelo:#f59e0b;--preto:#0a0a0a;}
+body{font-family:'DM Sans',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+
+.page{max-width:520px;width:100%;text-align:center;}
+
+/* Ícone boleto animado */
+.boleto-icon{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#92400e,#f59e0b);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;animation:popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;}
+@keyframes popIn{from{transform:scale(0);}to{transform:scale(1);}}
+.boleto-icon svg{width:40px;height:40px;}
+
+.badge-amarelo{display:inline-block;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.35);color:#fbbf24;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:16px;animation:fadeUp 0.4s 0.3s ease both;}
+
+.titulo{font-family:'Syne',sans-serif;font-size:clamp(26px,6vw,38px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:10px;animation:fadeUp 0.4s 0.4s ease both;}
+.titulo span{color:var(--amarelo);}
+
+.subtitulo{font-size:15px;color:rgba(255,255,255,0.55);line-height:1.6;margin-bottom:28px;animation:fadeUp 0.4s 0.5s ease both;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+/* Countdown */
+.countdown-box{background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.25);border-radius:14px;padding:20px;margin-bottom:20px;animation:fadeUp 0.4s 0.55s ease both;}
+.countdown-label{font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.countdown-nums{display:flex;justify-content:center;gap:12px;}
+.cnum{text-align:center;}
+.cnum-val{font-family:'Syne',sans-serif;font-size:36px;font-weight:900;color:var(--amarelo);line-height:1;display:block;}
+.cnum-label{font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px;}
+.cnum-sep{font-family:'Syne',sans-serif;font-size:32px;font-weight:900;color:rgba(245,158,11,0.3);align-self:flex-start;padding-top:4px;}
+
+/* Card instruções */
+.card{background:#111;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:22px;margin-bottom:16px;text-align:left;animation:fadeUp 0.4s 0.6s ease both;}
+.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;}
+
+.passo{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.passo:last-child{border-bottom:none;}
+.passo-ic{width:30px;height:30px;border-radius:8px;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.passo-info{flex:1;}
+.passo-titulo{font-size:14px;font-weight:500;color:#fff;margin-bottom:2px;}
+.passo-desc{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.5;}
+
+/* Preview do produto bloqueado */
+.produto-preview{background:#111;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:20px;margin-bottom:16px;animation:fadeUp 0.4s 0.7s ease both;position:relative;overflow:hidden;}
+.produto-preview::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:1;border-radius:16px;}
+.lock-overlay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;text-align:center;}
+.lock-icon{font-size:32px;display:block;margin-bottom:6px;}
+.lock-text{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#fff;}
+.lock-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px;}
+.mod-item-blur{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:14px;color:rgba(255,255,255,0.3);filter:blur(2px);}
+.mod-item-blur:last-child{border-bottom:none;}
+
+/* CTA principal */
+.btn-pix{display:block;background:var(--laranja);color:#fff;font-family:'Syne',sans-serif;font-weight:900;font-size:16px;padding:18px;border-radius:10px;text-decoration:none;margin-bottom:10px;animation:fadeUp 0.4s 0.75s ease both;transition:opacity 0.2s;cursor:pointer;border:none;width:100%;}
+.btn-pix:hover{opacity:0.9;}
+
+/* Alternativa PIX */
+.pix-suggestion{background:rgba(255,69,0,0.06);border:1px solid rgba(255,69,0,0.15);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;gap:12px;animation:fadeUp 0.4s 0.8s ease both;}
+.pix-ic{font-size:24px;flex-shrink:0;}
+.pix-text{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;text-align:left;}
+.pix-text strong{color:var(--laranja);}
+.btn-pix-link{background:transparent;border:1px solid var(--laranja);color:var(--laranja);font-family:'Syne',sans-serif;font-size:12px;font-weight:700;padding:7px 14px;border-radius:6px;cursor:pointer;white-space:nowrap;margin-left:auto;flex-shrink:0;}
+
+/* Urgência */
+.urgencia-msg{background:#111;border-radius:10px;padding:14px;margin-bottom:20px;font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;animation:fadeUp 0.4s 0.85s ease both;text-align:left;}
+.urgencia-msg strong{color:var(--amarelo);}
+
+.rodape{font-size:12px;color:rgba(255,255,255,0.25);line-height:1.6;animation:fadeUp 0.4s 0.9s ease both;}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="badge-amarelo">⏳ Aguardando Pagamento</div>
+
+  <div class="boleto-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="3" width="20" height="18" rx="2"/>
+      <line x1="6" y1="8" x2="6" y2="16"/>
+      <line x1="8" y1="8" x2="8" y2="16"/>
+      <line x1="10" y1="8" x2="10" y2="16"/>
+      <line x1="13" y1="8" x2="13" y2="16"/>
+      <line x1="16" y1="8" x2="16" y2="16"/>
+      <line x1="18" y1="8" x2="18" y2="16"/>
+    </svg>
+  </div>
+
+  <h1 class="titulo">Seu boleto foi<br><span>gerado com sucesso!</span></h1>
+  <p class="subtitulo">Pague até a data de vencimento para garantir seu acesso ao Desafio 21 Dias. Assim que o pagamento for identificado, você recebe o acesso no e-mail.</p>
+
+  <!-- Countdown -->
+  <div class="countdown-box">
+    <div class="countdown-label">Seu boleto vence em</div>
+    <div class="countdown-nums">
+      <div class="cnum"><span class="cnum-val" id="dias">02</span><div class="cnum-label">dias</div></div>
+      <div class="cnum-sep">:</div>
+      <div class="cnum"><span class="cnum-val" id="horas">23</span><div class="cnum-label">horas</div></div>
+      <div class="cnum-sep">:</div>
+      <div class="cnum"><span class="cnum-val" id="min">59</span><div class="cnum-label">min</div></div>
+      <div class="cnum-sep">:</div>
+      <div class="cnum"><span class="cnum-val" id="seg">59</span><div class="cnum-label">seg</div></div>
+    </div>
+  </div>
+
+  <!-- Instruções -->
+  <div class="card">
+    <div class="card-title">Como pagar</div>
+    <div class="passo">
+      <div class="passo-ic">📧</div>
+      <div class="passo-info">
+        <div class="passo-titulo">Verifique seu e-mail</div>
+        <div class="passo-desc">O boleto foi enviado para o e-mail cadastrado. Cheque a caixa de spam se não aparecer.</div>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-ic">📱</div>
+      <div class="passo-info">
+        <div class="passo-titulo">Pague pelo app do banco</div>
+        <div class="passo-desc">Abra o app, vá em "Pagar boleto" e escaneie o código de barras ou digite a linha digitável.</div>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-ic">⏱️</div>
+      <div class="passo-info">
+        <div class="passo-titulo">Acesso em até 1 hora</div>
+        <div class="passo-desc">Após a confirmação do pagamento, você recebe o e-mail com o acesso às aulas automaticamente.</div>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-ic">📞</div>
+      <div class="passo-info">
+        <div class="passo-titulo">Precisa de ajuda?</div>
+        <div class="passo-desc">Entre em contato respondendo o e-mail que enviamos ou pelo WhatsApp de suporte.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Produto bloqueado preview -->
+  <div class="produto-preview">
+    <div class="lock-overlay">
+      <span class="lock-icon">🔒</span>
+      <div class="lock-text">Acesso liberado após o pagamento</div>
+      <div class="lock-sub">21 aulas + cardápio + bônus</div>
+    </div>
+    <div class="card-title" style="position:relative;z-index:0;">O que você vai receber</div>
+    <div class="mod-item-blur">🔥 Módulo 1 — Ativação (7 aulas · Dias 1–7)</div>
+    <div class="mod-item-blur">⚡ Módulo 2 — Aceleração (7 aulas · Dias 8–14)</div>
+    <div class="mod-item-blur">💪 Módulo 3 — Transformação (7 aulas · Dias 15–21)</div>
+    <div class="mod-item-blur">🍽️ Cardápio completo 21 dias + bônus</div>
+  </div>
+
+  <!-- Sugestão PIX -->
+  <div class="pix-suggestion">
+    <div class="pix-ic">⚡</div>
+    <div class="pix-text"><strong>Quer acesso imediato?</strong> Pague com PIX e libere as aulas em segundos — sem esperar aprovação do boleto.</div>
+    <button class="btn-pix-link" onclick="window.history.back()">Pagar com PIX</button>
+  </div>
+
+  <!-- Urgência -->
+  <div class="urgencia-msg">
+    ⏳ <strong>Lembre-se:</strong> o boleto vence em 2 dias úteis. Após o vencimento, o pedido é cancelado automaticamente e você precisará fazer uma nova compra. Pague hoje para garantir o acesso.
+  </div>
+
+  <button class="btn-pix" onclick="alert('Cole aqui o link do boleto gerado pela Perfect Pay')">VER MEU BOLETO →</button>
+
+  <p class="rodape">🔒 Compra segura · Dados protegidos · Garantia de 7 dias após o pagamento<br>Desafio 21 Dias — desafio21dias.com.br</p>
+</div>
+
+<script>
+// Countdown 2 dias
+const end = new Date();
+end.setDate(end.getDate()+2);
+
+function update(){
+  const now = new Date();
+  const diff = end - now;
+  if(diff<=0){
+    document.getElementById('dias').textContent='00';
+    document.getElementById('horas').textContent='00';
+    document.getElementById('min').textContent='00';
+    document.getElementById('seg').textContent='00';
+    return;
+  }
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  document.getElementById('dias').textContent=String(d).padStart(2,'0');
+  document.getElementById('horas').textContent=String(h).padStart(2,'0');
+  document.getElementById('min').textContent=String(m).padStart(2,'0');
+  document.getElementById('seg').textContent=String(s).padStart(2,'0');
+}
+update();
+setInterval(update,1000);
+</script>
+</body>
+</html>

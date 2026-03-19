@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desafio 21 Dias — Corpo Novo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --laranja:#FF4500;
+  --laranja-dark:#cc3700;
+  --preto:#0a0a0a;
+  --branco:#ffffff;
+  --cinza:#f5f4f0;
+  --cinza-medio:#888;
+  --cinza-borda:#e0ddd6;
+  --texto:#1a1a1a;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--branco);color:var(--texto);overflow-x:hidden;}
+
+/* ---- HERO ---- */
+.hero{
+  background:var(--preto);
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 20px 80px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-40%;left:-20%;
+  width:600px;height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,69,0,0.18) 0%,transparent 70%);
+  animation:pulse 6s ease-in-out infinite;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-30%;right:-10%;
+  width:500px;height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,69,0,0.12) 0%,transparent 70%);
+  animation:pulse 8s ease-in-out infinite reverse;
+}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+
+.hero-badge{
+  display:inline-block;
+  background:rgba(255,69,0,0.15);
+  border:1px solid rgba(255,69,0,0.4);
+  color:var(--laranja);
+  font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;
+  padding:6px 18px;border-radius:20px;
+  margin-bottom:28px;
+  position:relative;z-index:2;
+  animation:fadeUp 0.6s ease both;
+}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(42px,8vw,80px);
+  font-weight:900;
+  color:var(--branco);
+  line-height:1.0;
+  margin-bottom:10px;
+  position:relative;z-index:2;
+  animation:fadeUp 0.6s 0.1s ease both;
+}
+.hero h1 em{color:var(--laranja);font-style:normal;}
+.hero-sub{
+  font-size:clamp(16px,2.5vw,22px);
+  color:rgba(255,255,255,0.65);
+  max-width:600px;
+  line-height:1.6;
+  margin:18px auto 36px;
+  position:relative;z-index:2;
+  animation:fadeUp 0.6s 0.2s ease both;
+}
+.hero-sub strong{color:var(--branco);}
+.hero-cta{
+  position:relative;z-index:2;
+  animation:fadeUp 0.6s 0.3s ease both;
+}
+.btn-hero{
+  display:inline-block;
+  background:var(--laranja);
+  color:#fff;
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:17px;
+  padding:18px 44px;
+  border-radius:6px;
+  text-decoration:none;
+  letter-spacing:0.3px;
+  transition:all 0.2s;
+  border:none;cursor:pointer;
+}
+.btn-hero:hover{background:var(--laranja-dark);transform:translateY(-2px);}
+.hero-micro{
+  font-size:13px;color:rgba(255,255,255,0.4);
+  margin-top:12px;
+  position:relative;z-index:2;
+}
+
+.hero-numbers{
+  display:flex;gap:40px;flex-wrap:wrap;justify-content:center;
+  margin-top:56px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding-top:40px;
+  position:relative;z-index:2;
+  animation:fadeUp 0.6s 0.4s ease both;
+}
+.hero-num{text-align:center;}
+.hero-num-val{font-family:'Syne',sans-serif;font-size:36px;font-weight:900;color:var(--laranja);}
+.hero-num-label{font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+/* ---- DOR / IDENTIFICAÇÃO ---- */
+.dor{background:var(--cinza);padding:80px 20px;}
+.container{max-width:700px;margin:0 auto;}
+.section-label{font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--laranja);margin-bottom:12px;}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(26px,4vw,38px);font-weight:800;color:var(--preto);line-height:1.2;margin-bottom:16px;}
+.section-title em{color:var(--laranja);font-style:normal;}
+.section-body{font-size:16px;color:#555;line-height:1.7;margin-bottom:28px;}
+
+.dor-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px;}
+.dor-item{
+  background:var(--branco);
+  border:1px solid var(--cinza-borda);
+  border-radius:10px;
+  padding:18px;
+  display:flex;align-items:flex-start;gap:12px;
+}
+.dor-icon{font-size:22px;flex-shrink:0;margin-top:2px;}
+.dor-text{font-size:14px;color:#444;line-height:1.5;}
+.dor-text strong{display:block;font-size:15px;color:var(--preto);margin-bottom:3px;}
+
+/* ---- MONJARO COMPARE ---- */
+.compare{background:var(--preto);padding:80px 20px;text-align:center;}
+.compare .section-label{color:var(--laranja);}
+.compare .section-title{color:var(--branco);}
+.compare-table{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:rgba(255,255,255,0.08);
+  border-radius:12px;overflow:hidden;
+  margin-top:40px;text-align:left;
+}
+.compare-col{background:var(--preto);padding:28px 24px;}
+.compare-col.destaque{background:#0f0f0f;border:1px solid rgba(255,69,0,0.3);}
+.compare-col-header{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:24px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.compare-col-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--branco);}
+.compare-col-badge{font-size:11px;padding:3px 10px;border-radius:20px;}
+.badge-ruim{background:rgba(255,255,255,0.06);color:#888;}
+.badge-bom{background:rgba(255,69,0,0.15);color:var(--laranja);}
+.compare-linha{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:14px;color:rgba(255,255,255,0.65);
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  line-height:1.4;
+}
+.compare-linha:last-child{border-bottom:none;}
+.compare-linha .ic{flex-shrink:0;font-size:15px;margin-top:1px;}
+.compare-linha.good{color:rgba(255,255,255,0.9);}
+
+/* ---- MÓDULOS ---- */
+.modulos{background:var(--branco);padding:80px 20px;}
+.mod-list{margin-top:40px;display:flex;flex-direction:column;gap:16px;}
+.mod{
+  border:1px solid var(--cinza-borda);
+  border-radius:12px;
+  overflow:hidden;
+}
+.mod-head{
+  display:flex;align-items:center;gap:16px;
+  padding:20px 22px;
+  background:var(--cinza);
+}
+.mod-num-badge{
+  width:40px;height:40px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:900;
+  flex-shrink:0;
+}
+.m1{background:var(--laranja);color:#fff;}
+.m2{background:var(--preto);color:#fff;}
+.m3{background:var(--laranja);color:#fff;}
+.mod-head-info{flex:1;}
+.mod-head-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--preto);}
+.mod-head-dias{font-size:13px;color:var(--cinza-medio);margin-top:2px;}
+.mod-body{padding:0 22px 20px;background:var(--branco);}
+.mod-tema{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:10px 0;
+  border-bottom:1px solid var(--cinza-borda);
+  font-size:14px;color:#555;
+}
+.mod-tema:last-child{border-bottom:none;}
+.mod-dia{font-size:11px;font-weight:700;color:var(--laranja);min-width:42px;padding-top:1px;text-transform:uppercase;}
+.mod-tag{
+  display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;
+  margin-left:8px;font-weight:500;flex-shrink:0;
+}
+.tag-t{background:#fff0eb;color:#e83d00;}
+.tag-d{background:#e8f5e9;color:#2e7d32;}
+.tag-m{background:#e3f2fd;color:#1565c0;}
+
+/* ---- ALIMENTAÇÃO ---- */
+.alimentacao{background:var(--cinza);padding:80px 20px;}
+.alim-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px;}
+.alim-card{
+  background:var(--branco);border:1px solid var(--cinza-borda);border-radius:12px;
+  padding:20px;
+}
+.alim-icon{font-size:26px;margin-bottom:10px;}
+.alim-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--preto);margin-bottom:8px;}
+.alim-desc{font-size:13px;color:#666;line-height:1.5;}
+
+/* ---- DEPOIMENTOS ---- */
+.depoimentos{background:var(--branco);padding:80px 20px;}
+.dep-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:36px;}
+.dep{
+  background:var(--cinza);border-radius:12px;padding:22px;
+}
+.dep-stars{color:var(--laranja);font-size:14px;margin-bottom:10px;}
+.dep-texto{font-size:14px;color:#444;line-height:1.6;margin-bottom:14px;font-style:italic;}
+.dep-nome{font-size:13px;font-weight:500;color:var(--preto);}
+.dep-detalhe{font-size:12px;color:var(--cinza-medio);}
+.dep-result{
+  display:inline-block;
+  background:rgba(255,69,0,0.1);color:var(--laranja);
+  font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;
+  margin-top:8px;
+}
+
+/* ---- OFERTA ---- */
+.oferta{background:var(--preto);padding:80px 20px;text-align:center;}
+.oferta .section-title{color:var(--branco);}
+.oferta .section-label{color:var(--laranja);}
+.price-box{
+  background:#111;border:1px solid rgba(255,69,0,0.25);
+  border-radius:16px;padding:40px 32px;
+  max-width:440px;margin:40px auto 0;
+}
+.price-de{font-size:14px;color:#666;text-decoration:line-through;margin-bottom:4px;}
+.price-por{font-family:'Syne',sans-serif;font-size:56px;font-weight:900;color:var(--branco);line-height:1;}
+.price-por span{font-size:24px;vertical-align:top;margin-top:10px;display:inline-block;color:var(--laranja);}
+.price-parcela{font-size:14px;color:#888;margin-top:6px;}
+.bonus-list{text-align:left;margin:28px 0 32px;}
+.bonus-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:14px;color:rgba(255,255,255,0.75);
+  padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.06);
+  line-height:1.4;
+}
+.bonus-item:last-child{border-bottom:none;}
+.bonus-ic{color:var(--laranja);font-weight:700;flex-shrink:0;}
+.btn-comprar{
+  display:block;width:100%;
+  background:var(--laranja);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:900;font-size:18px;
+  padding:20px;border-radius:8px;border:none;cursor:pointer;
+  letter-spacing:0.3px;text-decoration:none;
+  transition:all 0.2s;
+}
+.btn-comprar:hover{background:var(--laranja-dark);transform:translateY(-2px);}
+.garantia{font-size:13px;color:#666;margin-top:14px;line-height:1.5;}
+
+/* ---- FAQ ---- */
+.faq{background:var(--cinza);padding:80px 20px;}
+.faq-list{margin-top:36px;display:flex;flex-direction:column;gap:10px;}
+.faq-item{background:var(--branco);border:1px solid var(--cinza-borda);border-radius:10px;overflow:hidden;}
+.faq-q{
+  padding:18px 20px;font-weight:500;font-size:15px;color:var(--preto);
+  cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+}
+.faq-q::after{content:'+';font-size:20px;color:var(--laranja);font-weight:300;}
+.faq-a{padding:0 20px 16px;font-size:14px;color:#666;line-height:1.7;display:none;}
+.faq-item.open .faq-a{display:block;}
+.faq-item.open .faq-q::after{content:'−';}
+
+/* ---- FOOTER ---- */
+footer{background:var(--preto);padding:40px 20px;text-align:center;}
+footer p{font-size:13px;color:#444;line-height:1.7;}
+footer a{color:#666;text-decoration:none;}
+
+/* STICKY CTA */
+.sticky-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--preto);border-top:1px solid rgba(255,69,0,0.3);
+  padding:12px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  z-index:100;
+  transform:translateY(100%);
+  transition:transform 0.3s ease;
+}
+.sticky-bar.visible{transform:translateY(0);}
+.sticky-text{font-size:14px;color:rgba(255,255,255,0.7);}
+.sticky-text strong{color:var(--branco);font-family:'Syne',sans-serif;}
+.btn-sticky{
+  background:var(--laranja);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:14px;
+  padding:12px 24px;border-radius:6px;border:none;cursor:pointer;
+  white-space:nowrap;text-decoration:none;
+}
+
+/* RESPONSIVO */
+@media(max-width:640px){
+  .dor-grid,.compare-table,.alim-grid,.dep-grid{grid-template-columns:1fr;}
+  .hero-numbers{gap:28px;}
+  .sticky-bar{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="sticky-text"><strong>Desafio 21 Dias</strong> — Últimas vagas com desconto</div>
+  <a href="#oferta" class="btn-sticky">GARANTIR ACESSO →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Método Comprovado · Resultado em 21 Dias</div>
+  <h1>Emagreça <em>21 dias</em><br>sem passar fome</h1>
+  <p class="hero-sub">O mesmo efeito saciante do <strong>Monjaro</strong> — sem injeção, sem remédio, sem dieta maluca. Treino em casa ou academia. Alimentação real.</p>
+  <div class="hero-cta">
+    <a href="#oferta" class="btn-hero">QUERO COMEÇAR HOJE →</a>
+    <p class="hero-micro">Acesso digital imediato · Garantia de 7 dias</p>
+  </div>
+  <div class="hero-numbers">
+    <div class="hero-num"><div class="hero-num-val">–5kg</div><div class="hero-num-label">média de resultado</div></div>
+    <div class="hero-num"><div class="hero-num-val">21</div><div class="hero-num-label">dias de transformação</div></div>
+    <div class="hero-num"><div class="hero-num-val">3</div><div class="hero-num-label">módulos completos</div></div>
+    <div class="hero-num"><div class="hero-num-val">0</div><div class="hero-num-label">injeção ou remédio</div></div>
+  </div>
+</section>
+
+<!-- DOR -->
+<section class="dor">
+  <div class="container">
+    <div class="section-label">Você se identifica?</div>
+    <h2 class="section-title">Cansado de tentar e<br>não ver <em>resultado</em>?</h2>
+    <p class="section-body">A maioria das pessoas não falha por falta de vontade. Falha porque usa o método errado — dieta que passa fome, treino que cansa sem emagrecer, e suplemento caro que não resolve o problema real.</p>
+    <div class="dor-grid">
+      <div class="dor-item"><div class="dor-icon">😫</div><div class="dor-text"><strong>Fome o tempo todo</strong>Você tenta comer menos mas a fome bate forte e você acaba comendo mais do que devia.</div></div>
+      <div class="dor-item"><div class="dor-icon">📉</div><div class="dor-text"><strong>Perde e recupera</strong>Já emagreceu antes, mas o peso voltou tudo — às vezes mais do que estava antes.</div></div>
+      <div class="dor-item"><div class="dor-icon">🏋️</div><div class="dor-text"><strong>Treina mas não muda</strong>Vai à academia, faz caminhada, mas o corpo parece travado e a balança não mexe.</div></div>
+      <div class="dor-item"><div class="dor-icon">🍫</div><div class="dor-text"><strong>Compulsão noturna</strong>O dia vai bem, mas depois das 19h bate aquela vontade irresistível de atacar o que não devia.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE MONJARO -->
+<section class="compare">
+  <div class="container">
+    <div class="section-label">Comparativo honesto</div>
+    <h2 class="section-title" style="color:#fff;">Por que funciona melhor<br>do que o <em>Monjaro</em>?</h2>
+    <p style="color:rgba(255,255,255,0.55);font-size:15px;max-width:520px;margin:12px auto 0;line-height:1.6;">O Monjaro suprime a fome com injeção. Nosso método ensina seu corpo a regular o apetite naturalmente — e o resultado é permanente.</p>
+    <div class="compare-table">
+      <div class="compare-col">
+        <div class="compare-col-header">
+          <div class="compare-col-name">Monjaro 💉</div>
+          <div class="compare-col-badge badge-ruim">Remédio</div>
+        </div>
+        <div class="compare-linha"><span class="ic">✗</span> R$1.200 a R$1.800 por mês</div>
+        <div class="compare-linha"><span class="ic">✗</span> Injeção semanal obrigatória</div>
+        <div class="compare-linha"><span class="ic">✗</span> Peso volta ao parar</div>
+        <div class="compare-linha"><span class="ic">✗</span> Náuseas, vômito, efeitos colaterais</div>
+        <div class="compare-linha"><span class="ic">✗</span> Depende do médico e da receita</div>
+        <div class="compare-linha"><span class="ic">✗</span> Não ensina a se alimentar</div>
+      </div>
+      <div class="compare-col destaque">
+        <div class="compare-col-header">
+          <div class="compare-col-name">Desafio 21 Dias 🔥</div>
+          <div class="compare-col-badge badge-bom">Natural</div>
+        </div>
+        <div class="compare-linha good"><span class="ic">✓</span> R$39,90 — acesso único, sem mensalidade</div>
+        <div class="compare-linha good"><span class="ic">✓</span> 100% natural — comida real</div>
+        <div class="compare-linha good"><span class="ic">✓</span> Resultado permanente</div>
+        <div class="compare-linha good"><span class="ic">✓</span> Sem efeito colateral nenhum</div>
+        <div class="compare-linha good"><span class="ic">✓</span> Começa hoje, sem prescrição</div>
+        <div class="compare-linha good"><span class="ic">✓</span> Você aprende a comer e saciar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULOS -->
+<section class="modulos">
+  <div class="container">
+    <div class="section-label">O que você vai receber</div>
+    <h2 class="section-title">3 Módulos · <em>21 Dias</em> de Transformação</h2>
+    <p class="section-body">Cada semana tem um objetivo claro. Você nunca vai ficar sem saber o que fazer — é dia a dia, passo a passo.</p>
+    <div class="mod-list">
+
+      <div class="mod">
+        <div class="mod-head">
+          <div class="mod-num-badge m1">1</div>
+          <div class="mod-head-info">
+            <div class="mod-head-name">Ativação — Acordando o Corpo</div>
+            <div class="mod-head-dias">Dias 1 a 7 · Fase de adaptação</div>
+          </div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-tema"><div class="mod-dia">Dia 1</div><div>Diagnóstico corporal: peso, medidas e definição de meta real <span class="mod-tag tag-m">Mindset</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 2</div><div>Treino de ativação full body (30 min) — casa ou academia <span class="mod-tag tag-t">Treino</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 3</div><div>Método do prato cheio: como comer mais e emagrecer <span class="mod-tag tag-d">Dieta</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 4</div><div>Treino de membros inferiores — acelera o metabolismo <span class="mod-tag tag-t">Treino</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 5</div><div>Os 5 alimentos que eliminam a fome sem remédio <span class="mod-tag tag-d">Dieta</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 6</div><div>Cardio leve estratégico — queima sem destruir o músculo <span class="mod-tag tag-t">Treino</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 7</div><div>Revisão da semana + primeira medição de progresso <span class="mod-tag tag-m">Mindset</span></div></div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-head">
+          <div class="mod-num-badge m2">2</div>
+          <div class="mod-head-info">
+            <div class="mod-head-name">Aceleração — Queimando de Verdade</div>
+            <div class="mod-head-dias">Dias 8 a 14 · Fase de intensificação</div>
+          </div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-tema"><div class="mod-dia">Dia 8</div><div>HIIT 20 min — máximo resultado em menos tempo <span class="mod-tag tag-t">Treino</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 9</div><div>Estratégia anti-compulsão noturna — o que comer depois das 19h <span class="mod-tag tag-d">Dieta</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 10</div><div>Treino superior + core: braços, costas e abdômen <span class="mod-tag tag-t">Treino</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 11</div><div>Hidratação que emagrece: água + chás termogênicos <span class="mod-tag tag-d">Dieta</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 12</div><div>Treino funcional com variações para casa e academia <span class="mod-tag tag-t">Treino</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 13</div><div>Como aproveitar o fim de semana sem sabotar a semana <span class="mod-tag tag-m">Mindset</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 14</div><div>Segunda medição + ajuste de treino para a reta final <span class="mod-tag tag-m">Mindset</span></div></div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-head">
+          <div class="mod-num-badge m3">3</div>
+          <div class="mod-head-info">
+            <div class="mod-head-name">Transformação — Reta Final</div>
+            <div class="mod-head-dias">Dias 15 a 21 · Fase de definição</div>
+          </div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-tema"><div class="mod-dia">Dia 15</div><div>Treino de alta intensidade — queima gordura localizada <span class="mod-tag tag-t">Treino</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 16</div><div>Cardápio dos últimos 6 dias: desinchar rápido <span class="mod-tag tag-d">Dieta</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 17</div><div>Treino de definição muscular — corpo mais firme em 48h <span class="mod-tag tag-t">Treino</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 18</div><div>Sono e recuperação: como dormir bem acelera o emagrecimento <span class="mod-tag tag-m">Mindset</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 19</div><div>Treino metabólico final — queima 48h depois de parar <span class="mod-tag tag-t">Treino</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 20</div><div>Descanso ativo + como manter o resultado para sempre <span class="mod-tag tag-m">Mindset</span></div></div>
+          <div class="mod-tema"><div class="mod-dia">Dia 21</div><div>Medição final, fotos de antes e depois + plano de continuidade <span class="mod-tag tag-m">Mindset</span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ALIMENTAÇÃO -->
+<section class="alimentacao">
+  <div class="container">
+    <div class="section-label">Método alimentar</div>
+    <h2 class="section-title">Sem contar caloria.<br>Sem <em>passar fome</em>.</h2>
+    <p class="section-body">A alimentação do Desafio 21 Dias não é uma dieta — é uma reeducação que você consegue seguir de verdade, inclusive no fim de semana.</p>
+    <div class="alim-grid">
+      <div class="alim-card"><div class="alim-icon">🍽️</div><div class="alim-title">Prato cheio, caloria certa</div><div class="alim-desc">Você aprende a montar um prato que sacia sem explodir as calorias — sem balança, sem app.</div></div>
+      <div class="alim-card"><div class="alim-icon">⏰</div><div class="alim-title">Timing estratégico</div><div class="alim-desc">O que comer antes e depois do treino, e o protocolo anti-fome para não ceder à noite.</div></div>
+      <div class="alim-card"><div class="alim-icon">🥩</div><div class="alim-title">Proteína como âncora</div><div class="alim-desc">Toda refeição tem proteína — o nutriente que mantém a saciedade e preserva o músculo enquanto emagrece.</div></div>
+      <div class="alim-card"><div class="alim-icon">🍞</div><div class="alim-title">Carboidrato não é vilão</div><div class="alim-desc">O método não corta arroz nem pão — te ensina qual tipo, em qual quantidade e em qual horário.</div></div>
+      <div class="alim-card"><div class="alim-icon">🍫</div><div class="alim-title">Protocolo do craving</div><div class="alim-desc">Quer doce? Tem estratégia para isso. O desafio não pune — te dá ferramentas para não depender.</div></div>
+      <div class="alim-card"><div class="alim-icon">🎉</div><div class="alim-title">Fim de semana livre</div><div class="alim-desc">Guia de como comer fora, em churrasco, aniversário — sem culpa e sem sabotar o resultado.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depoimentos">
+  <div class="container">
+    <div class="section-label">Resultados reais</div>
+    <h2 class="section-title">Quem fez o desafio<br><em>transformou</em> o corpo</h2>
+    <div class="dep-grid">
+      <div class="dep">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-texto">"Perdi 6kg em 21 dias sem passar fome nenhum dia. Não acreditei no começo, mas segui o método e o resultado apareceu de verdade."</div>
+        <div class="dep-nome">Camila R.</div>
+        <div class="dep-detalhe">São Paulo · treinou em casa</div>
+        <div class="dep-result">–6kg em 21 dias</div>
+      </div>
+      <div class="dep">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-texto">"Estava gastando R$1.400 por mês no Monjaro. O desafio me deu o mesmo resultado — fome zero — e aprendi a me alimentar de vez."</div>
+        <div class="dep-nome">Rodrigo M.</div>
+        <div class="dep-detalhe">Curitiba · treinou na academia</div>
+        <div class="dep-result">–7kg em 21 dias</div>
+      </div>
+      <div class="dep">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-texto">"Sempre tive compulsão noturna. Com o protocolo do dia 9 isso simplesmente parou. Fiquei em choque com a diferença."</div>
+        <div class="dep-nome">Fernanda L.</div>
+        <div class="dep-detalhe">Rio de Janeiro · 40 min/dia</div>
+        <div class="dep-result">–4,5kg em 21 dias</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFERTA -->
+<section class="oferta" id="oferta">
+  <div class="container">
+    <div class="section-label">Oferta por tempo limitado</div>
+    <h2 class="section-title" style="color:#fff;">Comece hoje.<br><em>Resultado</em> em 21 dias.</h2>
+    <div class="price-box">
+      <div class="price-de">De R$97,00</div>
+      <div class="price-por"><span>R$</span>39,90</div>
+      <div class="price-parcela">ou 2x de R$20,90 sem juros</div>
+      <div class="bonus-list">
+        <div class="bonus-item"><span class="bonus-ic">✓</span> Módulo 1 — Ativação (7 aulas)</div>
+        <div class="bonus-item"><span class="bonus-ic">✓</span> Módulo 2 — Aceleração (7 aulas)</div>
+        <div class="bonus-item"><span class="bonus-ic">✓</span> Módulo 3 — Transformação (7 aulas)</div>
+        <div class="bonus-item"><span class="bonus-ic">✓</span> Cardápio completo 21 dias</div>
+        <div class="bonus-item"><span class="bonus-ic">✓</span> Versão treino em casa + academia</div>
+        <div class="bonus-item"><span class="bonus-ic">✓</span> Bônus: Checklist diário imprimível</div>
+        <div class="bonus-item"><span class="bonus-ic">✓</span> Bônus: Guia de refeição fora de casa</div>
+        <div class="bonus-item"><span class="bonus-ic">✓</span> Acesso vitalício + atualizações</div>
+      </div>
+      <a href="#" class="btn-comprar">QUERO COMEÇAR AGORA →</a>
+      <p class="garantia">🔒 Garantia de 7 dias — se não gostar, devolvemos 100% do seu dinheiro. Sem perguntas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-label">Dúvidas frequentes</div>
+    <h2 class="section-title">Ainda tem <em>alguma dúvida</em>?</h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Precisa de academia para fazer o desafio?</div><div class="faq-a">Não. O desafio tem versão completa para quem treina em casa (sem equipamento) e para quem vai à academia. Você escolhe o que funciona melhor para sua rotina.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Funciona para quem nunca fez exercício?</div><div class="faq-a">Sim. O Módulo 1 começa do zero — com exercícios de adaptação e alimentação simples. Qualquer pessoa consegue seguir.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">É muito diferente do Monjaro?</div><div class="faq-a">O efeito de saciedade é similar, mas o mecanismo é completamente diferente. O Monjaro suprime a fome com hormônio sintético — e o efeito acaba quando você para. O Desafio 21 Dias regula seu apetite com alimento real, treino e hábito. O resultado fica.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Quanto tempo por dia preciso dedicar?</div><div class="faq-a">Os treinos têm entre 20 e 40 minutos. A alimentação não exige preparo especial — é adaptada para quem tem rotina corrida.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Como funciona a garantia?</div><div class="faq-a">Você tem 7 dias a partir da compra para pedir o reembolso total, sem nenhuma burocracia. Basta entrar em contato e devolvemos 100% do valor pago.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Desafio 21 Dias · Todos os direitos reservados<br>
+  <a href="#">Termos de uso</a> · <a href="#">Política de privacidade</a> · <a href="#">Contato</a><br><br>
+  <small>Este produto não é um medicamento e não substitui acompanhamento médico ou nutricional.</small></p>
+</footer>
+
+<script>
+// Sticky bar
+window.addEventListener('scroll', function(){
+  const bar = document.getElementById('stickyBar');
+  if(window.scrollY > 400) bar.classList.add('visible');
+  else bar.classList.remove('visible');
+});
+// FAQ
+function toggleFaq(el){
+  el.parentElement.classList.toggle('open');
+}
+</script>
+</body>
+</html>

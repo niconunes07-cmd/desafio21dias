@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compra Aprovada — Desafio 21 Dias</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--laranja:#FF4500;--preto:#0a0a0a;--verde:#16a34a;}
+body{font-family:'DM Sans',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+
+.page{max-width:520px;width:100%;text-align:center;}
+
+/* Confetti animado */
+.confetti-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;}
+.dot{position:absolute;width:8px;height:8px;border-radius:50%;animation:fall linear infinite;}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+/* Check animado */
+.check-circle{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#22c55e);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;position:relative;z-index:1;animation:popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;}
+@keyframes popIn{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
+.check-circle svg{width:44px;height:44px;}
+
+.badge-verde{display:inline-block;background:rgba(22,163,74,0.15);border:1px solid rgba(22,163,74,0.4);color:#4ade80;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:16px;position:relative;z-index:1;animation:fadeUp 0.5s 0.3s ease both;}
+
+.titulo{font-family:'Syne',sans-serif;font-size:clamp(28px,6vw,42px);font-weight:900;color:#fff;line-height:1.1;margin-bottom:10px;position:relative;z-index:1;animation:fadeUp 0.5s 0.4s ease both;}
+.titulo span{color:var(--laranja);}
+
+.subtitulo{font-size:16px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:32px;position:relative;z-index:1;animation:fadeUp 0.5s 0.5s ease both;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* Card de próximos passos */
+.card{background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;margin-bottom:16px;text-align:left;position:relative;z-index:1;animation:fadeUp 0.5s 0.6s ease both;}
+.card-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
+
+.passo{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.passo:last-child{border-bottom:none;}
+.passo-num{width:32px;height:32px;border-radius:50%;background:var(--laranja);color:#fff;font-family:'Syne',sans-serif;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.passo-info{flex:1;}
+.passo-titulo{font-size:14px;font-weight:500;color:#fff;margin-bottom:3px;}
+.passo-desc{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.5;}
+
+/* O que você recebeu */
+.modulos{background:#111;border:1px solid rgba(255,69,0,0.2);border-radius:16px;padding:20px;margin-bottom:16px;text-align:left;position:relative;z-index:1;animation:fadeUp 0.5s 0.7s ease both;}
+.mod-item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:14px;color:rgba(255,255,255,0.8);}
+.mod-item:last-child{border-bottom:none;}
+.mod-ic{color:var(--laranja);font-size:16px;flex-shrink:0;}
+
+/* CTA botão */
+.btn-acesso{display:block;background:var(--laranja);color:#fff;font-family:'Syne',sans-serif;font-weight:900;font-size:17px;padding:18px;border-radius:10px;text-decoration:none;margin-bottom:10px;position:relative;z-index:1;animation:fadeUp 0.5s 0.8s ease both;transition:opacity 0.2s;}
+.btn-acesso:hover{opacity:0.9;}
+.btn-micro{font-size:12px;color:rgba(255,255,255,0.35);position:relative;z-index:1;animation:fadeUp 0.5s 0.9s ease both;}
+
+/* Countdown urgência */
+.urgencia{background:rgba(255,69,0,0.08);border:1px solid rgba(255,69,0,0.2);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;gap:12px;position:relative;z-index:1;animation:fadeUp 0.5s 0.65s ease both;}
+.urgencia-icon{font-size:20px;flex-shrink:0;}
+.urgencia-text{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.5;}
+.urgencia-text strong{color:var(--laranja);}
+
+/* Garantia */
+.garantia{font-size:12px;color:rgba(255,255,255,0.3);margin-top:20px;line-height:1.6;position:relative;z-index:1;}
+</style>
+</head>
+<body>
+
+<!-- Confetti -->
+<div class="confetti-wrap" id="confetti"></div>
+
+<div class="page">
+  <div class="badge-verde">✓ Pagamento Confirmado</div>
+
+  <div class="check-circle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </div>
+
+  <h1 class="titulo">Bem-vindo ao<br>Desafio <span>21 Dias!</span></h1>
+  <p class="subtitulo">Sua compra foi aprovada. Verifique seu e-mail — o acesso às aulas foi enviado agora.</p>
+
+  <div class="urgencia">
+    <div class="urgencia-icon">🔥</div>
+    <div class="urgencia-text"><strong>Comece hoje, não amanhã.</strong> Cada dia que você adiar é um dia a menos de resultado. O Dia 1 está esperando.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Próximos passos</div>
+    <div class="passo">
+      <div class="passo-num">1</div>
+      <div class="passo-info">
+        <div class="passo-titulo">Verifique seu e-mail</div>
+        <div class="passo-desc">Enviamos o link de acesso para o e-mail usado na compra. Verifique a caixa de spam se não aparecer em 5 minutos.</div>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">2</div>
+      <div class="passo-info">
+        <div class="passo-titulo">Acesse o Módulo 1 — Dia 1</div>
+        <div class="passo-desc">Comece pelo Diagnóstico Corporal. Leva 15 minutos e define a base de tudo. Não pule.</div>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">3</div>
+      <div class="passo-info">
+        <div class="passo-titulo">Separe 30 min amanhã cedo</div>
+        <div class="passo-desc">O Dia 2 é o seu primeiro treino. Deixe a roupa separada hoje à noite — isso aumenta em 3x a chance de você treinar.</div>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">4</div>
+      <div class="passo-info">
+        <div class="passo-titulo">Dúvidas? Fale conosco</div>
+        <div class="passo-desc">Responda o e-mail de boas-vindas ou entre em contato. Estamos aqui para garantir seu resultado.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modulos">
+    <div class="card-title" style="margin-bottom:12px;">O que você acabou de garantir</div>
+    <div class="mod-item"><span class="mod-ic">🔥</span>Módulo 1 — Ativação (7 aulas · Dias 1–7)</div>
+    <div class="mod-item"><span class="mod-ic">⚡</span>Módulo 2 — Aceleração (7 aulas · Dias 8–14)</div>
+    <div class="mod-item"><span class="mod-ic">💪</span>Módulo 3 — Transformação (7 aulas · Dias 15–21)</div>
+    <div class="mod-item"><span class="mod-ic">🍽️</span>Cardápio completo 21 dias</div>
+    <div class="mod-item"><span class="mod-ic">🏠</span>Versão treino em casa + academia</div>
+    <div class="mod-item"><span class="mod-ic">📋</span>Bônus: Checklist diário imprimível</div>
+    <div class="mod-item"><span class="mod-ic">🍔</span>Bônus: Guia de refeição fora de casa</div>
+    <div class="mod-item"><span class="mod-ic">♾️</span>Acesso vitalício + atualizações</div>
+  </div>
+
+  <a href="#" class="btn-acesso">ACESSAR AS AULAS AGORA →</a>
+  <p class="btn-micro">O link de acesso também foi enviado para seu e-mail</p>
+
+  <p class="garantia">🔒 Compra protegida · Garantia de 7 dias · Acesso digital imediato<br>Desafio 21 Dias — Corpo Novo</p>
+</div>
+
+<script>
+// Confetti
+const colors = ['#FF4500','#FF6633','#FFB347','#ffffff','#ff8c00'];
+const wrap = document.getElementById('confetti');
+for(let i=0;i<60;i++){
+  const d = document.createElement('div');
+  d.className='dot';
+  const size = Math.random()*8+4;
+  d.style.cssText=`
+    width:${size}px;height:${size}px;
+    background:${colors[Math.floor(Math.random()*colors.length)]};
+    left:${Math.random()*100}%;
+    animation-duration:${Math.random()*3+2}s;
+    animation-delay:${Math.random()*3}s;
+    opacity:${Math.random()*0.8+0.2};
+    border-radius:${Math.random()>0.5?'50%':'2px'};
+  `;
+  wrap.appendChild(d);
+}
+</script>
+</body>
+</html>
